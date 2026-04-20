@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    h1{
+        color: aquamarine;
+    }
+    ul{
+        background-color: azure;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    li{
+        padding: 8px 0; border-bottom: 1px solid #eee;
+    }
+</style>
+<body>
+    <h1>Students list</h1>
+    <p>frontend server runing by nginix, aPi running at port 5000</p>
+    <ul id="students"> <li>loading</li></ul>
+<script>
+    fetch("http://localhost:5001/api/students")
+    .then(response => response.json())
+    .then(data => {
+        const list = document.getElementById('students');
+        list.innerHTML = data
+            .map(s => `<li>${JSON.stringify(s)}</li>`)
+            .join("");
+    })
+    .catch(err => {
+        document.getElementById('students').innerHTML =
+            '<li>could not connect to api ' + err + '</li>';
+    });
+</script>
+</body>
+</html>
